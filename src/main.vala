@@ -1,6 +1,19 @@
-void main () {
-    var server = new Soup.Server (Soup.SERVER_PORT, 8088);
-    server.add_handler ("/", file_handler);
-    server.add_handler ("/api", api_handler);
-    server.run ();
+public class Jobjctrl : Soup.Server {
+	public Jobjctrl () {
+		assert (this != null);
+    add_handler ("/", file_handler);
+    add_handler ("/api", api_handler);
+    try{
+        listen_all (8088, 0);
+    } catch (Error e) {
+        print ("Error: %s\n", e.message);
+    }
+  }
+}
+
+public static int main (string[] args) {
+    MainLoop loop = new MainLoop ();
+    var server = new Jobjctrl ();
+    loop.run ();
+		return 0;
 }
